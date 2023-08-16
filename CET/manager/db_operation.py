@@ -235,6 +235,17 @@ class user:
             sys_log('教师删除失败', LOG_ERR)
             return FAIL
 
+    # modified for select * for student information
+    @staticmethod
+    def get_all_students():
+        try:
+            students = user_m.Student.objects.all()
+            sys_log('获取所有学生信息成功', LOG_OK)
+            return students, SUCCESS
+        except:
+            sys_log('获取所有学生信息失败', LOG_ERR)
+            return None, FAIL
+
 
 class exam:
     def __init__(self):

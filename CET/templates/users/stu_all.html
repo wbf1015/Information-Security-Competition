@@ -242,6 +242,16 @@
             </div>
         </div>
     </div>
+    <div class="text-center">
+        <p></p>
+        <p>点击下面的按钮以刷新秘密份额：</p>
+        <a href="{% url 'user:refresh_secret_share' %}?refresh_clicked=1&info_phone={{ info.phone }}" class="btn btn-primary">刷新秘密份额</a>
+    </div>
+    <div class="text-center">
+        <p></p>
+        <p>点击下面的按钮以模拟攻击：</p>
+        <a href="{% url 'user:attack_webserver' %}?refresh_clicked=1&info_phone={{ info.phone }}" class="btn btn-primary">模拟攻击</a>
+    </div>
     <script>
         function toggleSubMenu(subMenuId) {
             var subMenu = document.getElementById(subMenuId);
@@ -258,6 +268,20 @@
             }
         }
     </script>
+    <script>
+        {% if info.status == 1 and info.Protocol2 != 'ASS' %}
+            // 在Protocol2为2时展示失败的弹窗
+            alert("操作失败，请重试");
+        {% endif %}
+    </script>
+    <script>
+        {% if info.status == 2 and info.Protocol2 != 'shamirF' %}
+            // 在Protocol2为2时展示失败的弹窗
+            alert("操作失败，请重试");
+        {% endif %}
+    </script>
+
+
 </body>
 
 </html>

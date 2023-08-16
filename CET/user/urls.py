@@ -14,6 +14,15 @@ urlpatterns = [
     re_path(r'^$|index', views.index, name='index'),
 
     path('log', views.log, name='log'),
+    path('change_stage1_protocol', views.change_stage1_protocol, name='change_stage1_protocol'),
+    path('refresh_secret_share', views.refresh_secret_share, name='refresh_secret_share'),
+    path('change_stage2_shamir', views.change_stage2_protocol, name='change_stage2_shamir'),
+    path('change_stage2_semi2k', views.change_stage2_protocol, name='change_stage2_semi2k'),
+    path('change_stage2_ASS', views.change_stage2_protocol, name='change_stage2_ASS'),
+    path('change_stage2_Brickell', views.change_stage2_protocol, name='change_stage2_Brickell'),
+    path('attack_webserver', views.attack_webserver, name='attack_webserver'),
+    path('quitlog', views.quitlog, name='quitlog'),
+    path('trust_device', views.trust_device, name='trust_device'),
 
     path('tea_signin', views.tea_signin, name='tea_signin'),
     path('stu_signin', views.stu_signin, name='stu_signin'),

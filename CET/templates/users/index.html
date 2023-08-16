@@ -96,5 +96,73 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    {% if Protocol %}
+        <script>
+            alert('成功切换协议为：{{ Protocol }}');
+        </script>
+    {% endif %}
+    {% if change_stage_2_pro %}
+        <script>
+            alert('成功切换协议为：{{ change_stage_2_pro }}');
+        </script>
+    {% endif %}
+    {% if refresh_success %}
+        <script>
+            alert('成功刷新秘密份额');
+        </script>
+    {% endif %}
+    {% if attack_simulator_success %}
+        <script>
+            alert('模拟攻击成功，详细信息请查看日志');
+        </script>
+    {% endif %}
+    {% if not_have_user %}
+        <script>
+            alert('更改密码失败，没有该用户，请检查后输入'
+            );
+        </script>
+    {% endif %}
+    {% if new_not_same %}
+        <script>
+            alert('更改密码失败，两次输入的新密码不一致，请检查后输入'
+            );
+        </script>
+    {% endif %}
+    {% if origin_password_wrong %}
+        <script>
+            alert('更改密码失败，原密码输入错误，请检查后输入'
+            );
+        </script>
+    {% endif %}
+    {% if change_password_success %}
+        <script>
+            alert('密码更新成功'
+            );
+        </script>
+    {% endif %}
+    {% if trust_device_no_user %}
+        <script>
+            alert('模拟信任设备失败，没有该用户，请检查后输入'
+            );
+        </script>
+    {% endif %}
+    {% if trust_device_wrong_password %}
+        <script>
+            alert('模拟信任设备失败，密码输入错误'
+            );
+        </script>
+    {% endif %}
+    {% if trust_device_suceess %}
+        <script>
+            alert('成功信任设备，可以启用自动填充密码'
+            );
+        </script>
+    {% endif %}
+    {% if untrust_device_suceess %}
+        <script>
+            alert('成功取消信任设备，未来将不可启用自动填充密码'
+            );
+        </script>
+    {% endif %}
 </body>
 </html>

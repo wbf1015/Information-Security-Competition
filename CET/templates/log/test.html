@@ -49,6 +49,17 @@
     <h1 class="text-center">日志展示</h1>
     <div class="log-box">
         <!-- 日志信息将在这里显示 -->
+        {% for log in LOGLIST %}
+            {% if log.id == 1 %}
+                <h1 style="color: green;">{{ log.msg }}</h1>
+            {% elif log.id == 2 %}
+                <h1 style="color: red;">{{ log.msg }}</h1>
+            {% elif log.id == 3 %}
+                <h1 style="color: blue;">{{ log.msg }}</h1>
+            {% else %}
+                <h1 style="color: black;">{{ log.msg }}</h1>
+            {% endif %}
+        {% endfor %}
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
