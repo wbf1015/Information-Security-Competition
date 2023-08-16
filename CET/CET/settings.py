@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',    # 数据库引擎
         'NAME': 'cet', # 数据库名称
         # 'HOST': '82.156.2.209', # 数据库地址，本机 ip 地址 127.0.0.1 
-        'HOST': '10.134.169.174',
+        'HOST': '10.130.14.120',
         'PORT': 3306, # 端口 
         'USER': 'root',  # 数据库用户名
         'PASSWORD': 'wbf20011015', # 数据库密码

@@ -54,11 +54,12 @@ def append_to_loglist(LogInfo):
     log_list.append(LogInfo)
 
 from sfModule.stage1Interface import Init_pro, Init_info, stage1_add_user, stage1_get_password, stage1_change_pro, check_init, get_stage1_all_users, erase_stage1_users
-from sfModule.stage2Interface import Init_pro2, Init_info2, stage2_add_user, stage2_get_password, stage2_change_pro, check_init2, ASS_special, shamir_special, shamir_special_check
+from sfModule.stage2Interface import Init_pro2, Init_info2, stage2_add_user, stage2_get_password, stage2_change_pro, check_init2, ASS_special, shamir_special, shamir_special_check, shamirS_special, shamirS_special_check
 
 
 now_Protocol = 'ABY3'
 now_Protocol2 = 'shamirF'
+
 if check_init(now_Protocol):
     Init_pro(now_Protocol)
     Init_info(now_Protocol, stu_dict)
@@ -125,6 +126,9 @@ def attack_webserver(request):
     if now_Protocol2 == 'shamirF':
         shamir_special(info_phone)
         return render(request, 'users/index.html', {'attack_simulator_success':'1'})
+    elif now_Protocol2 == 'shamirS':
+        shamirS_special(info_phone)
+        return render(request, 'users/index.html', {'attack_simulator_success': '1'})
     else:
         global  status
         status = 2
@@ -254,7 +258,7 @@ def stu_signin(request):
             else:
                 return render(request, 'users/stu_signin.html', {'auto_fill_failed':'1'})
         # 检查验证码
-        if checkcode and (checkcode.lower() != session_checkcode.lower()) and 1!=2 :
+        if False and checkcode and (checkcode.lower() != session_checkcode.lower()):
             # 添加错误信息
             error_message = "验证码填写错误"
             return render(request, 'users/stu_signin.html', {'error_message': '验证码填写错误'})
@@ -281,13 +285,23 @@ def stu_signin(request):
         # 检测是否被攻击
         stage2_password = stage2_get_password(now_Protocol2, id)
         if id in get_stage1_all_users(now_Protocol) and stu_dict[id] != stage2_password:
-            print('error find=', shamir_special_check(id, stu_dict[id]))
-            stage2_add_user(now_Protocol2, id, stu_dict[id])
-            return render(request, 'users/stu_signin.html', {'webserver_attacked': '检测到网站被攻击，正在修复，详情见日志'})
+            if now_Protocol2 == 'shamirF':
+                print('error find=', shamir_special_check(id, stu_dict[id]))
+                stage2_add_user(now_Protocol2, id, stu_dict[id])
+                return render(request, 'users/stu_signin.html', {'webserver_attacked': '检测到网站被攻击，正在修复，详情见日志'})
+            if now_Protocol2 == 'shamirS':
+                print('error find=', shamirS_special_check(id, stu_dict[id]))
+                stage2_add_user(now_Protocol2, id, stu_dict[id])
+                return render(request, 'users/stu_signin.html',{'webserver_attacked': '检测到网站被攻击，正在修复，详情见日志'})
         if id not in get_stage1_all_users(now_Protocol) and stu_dict[id] != stage2_get_password(now_Protocol2, id):
-            print('error find=', shamir_special_check(id, stu_dict[id]))
-            stage2_add_user(now_Protocol2, id, stu_dict[id])
-            return render(request, 'users/stu_signin.html',{'webserver_attacked': '检测到网站被攻击，正在修复，详情见日志'})
+            if now_Protocol2 == 'shamirF':
+                print('error find=', shamir_special_check(id, stu_dict[id]))
+                stage2_add_user(now_Protocol2, id, stu_dict[id])
+                return render(request, 'users/stu_signin.html',{'webserver_attacked': '检测到网站被攻击，正在修复，详情见日志'})
+            if now_Protocol2 == 'shamirS':
+                print('error find=', shamirS_special_check(id, stu_dict[id]))
+                stage2_add_user(now_Protocol2, id, stu_dict[id])
+                return render(request, 'users/stu_signin.html',{'webserver_attacked': '检测到网站被攻击，正在修复，详情见日志'})
         #  密码验证判断
         flag = False
         if id in get_stage1_all_users(now_Protocol):

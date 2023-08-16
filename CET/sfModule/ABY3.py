@@ -55,7 +55,7 @@ def init_ABY3():
     log_list = []
     global pyu_user, pyu_TTP, pyu_chrome, aby3_config, spu_aby3, aby3_spu_dic
     if spu_aby3 is None:
-        sf.init(['user', 'chrome', 'TTP', 'Webserver1', 'Webserver2', 'Webserver3', 'Webserver4', 'Webserver5'], address='local')
+        sf.init(['user', 'chrome', 'TTP', 'Webserver1', 'Webserver2', 'Webserver3', 'Webserver4', 'Webserver5', 'Webserver6', 'Webserver7'], address='local')
     pyu_user = None
     pyu_TTP = None
     pyu_chrome = None

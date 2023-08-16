@@ -39,11 +39,13 @@ def stage1_get_password(name, id):
     if name == 'ABY3':
         append_to_loglist(LogInfo(100, '正在尝试通过ABY3协议获取密码'))
         password, log_list = get_password_from_aby3_spu_dic(id)
+        log_list.append(LogInfo(100, str(name)+'协议恢复用户'+str(id)+'密码为'+str(password)))
         store_logs(log_list)
         return password
     else:
         append_to_loglist(LogInfo(100, '正在通过cheetah协议比对密码'))
         password, log_list = get_password_from_cheetah_spu_dic(id)
+        log_list.append(LogInfo(100, str(name) + '协议恢复用户' + str(id) + '密码为' + str(password)))
         store_logs(log_list)
         return password
 

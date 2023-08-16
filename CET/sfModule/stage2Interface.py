@@ -2,6 +2,7 @@ from .ASS import *
 from .semi2k import *
 from .Brickell import *
 from .shamir_shuffle import *
+from .shamir_selfcheck import *
 from user.views import append_to_loglist
 from .sfLog import *
 
@@ -23,6 +24,10 @@ def Init_pro2(stage1_name, stage2_name):
         append_to_loglist(LogInfo(100, '即将开始初始化shamir（网站服务器集群阶段）'))
         log_list = init_shamirF()
         store_logs(log_list)
+    if stage2_name == 'shamirS':
+        append_to_loglist(LogInfo(100, '即将开始初始化shamirS（网站服务器集群阶段）'))
+        log_list = init_shamirS()
+        store_logs(log_list)
 
 
 def Init_info2(name, info_dic):
@@ -37,6 +42,9 @@ def Init_info2(name, info_dic):
         store_logs(log_info)
     if name == 'shamirF':
         log_info = add_users_2_shamirF_pyu_dic(info_dic)
+        store_logs(log_info)
+    if name == 'shamirS':
+        log_info = add_users_2_shamirS_pyu_dic(info_dic)
         store_logs(log_info)
 
 
@@ -57,27 +65,41 @@ def stage2_add_user(name, id, password):
         append_to_loglist(LogInfo(100, '正在通过shamir协议增加用户'))
         log_info = add_user_2_shamirF_pyu_dic(id, password)
         store_logs(log_info)
+    if name == 'shamirS':
+        append_to_loglist(LogInfo(100, '正在通过shamirS协议增加用户'))
+        log_info = add_user_2_shamirS_pyu_dic(id, password)
+        store_logs(log_info)
 
 
 def stage2_get_password(name, id):
     if name == 'ASS':
         append_to_loglist(LogInfo(100, '正在尝试通过ASS协议获取密码'))
         password, log_list = get_password_from_ASS_pyu_dic(5, id)
+        log_list.append(LogInfo(100, str(name)+'协议恢复用户'+str(id)+'密码为'+str(password)))
         store_logs(log_list)
         return password
     if name == 'semi2k':
         append_to_loglist(LogInfo(100, '正在尝试通过semi2k协议获取密码'))
         password, log_list = get_password_from_semi2k_spu_dic(id)
+        log_list.append(LogInfo(100, str(name)+'协议恢复用户'+str(id)+'密码为'+str(password)))
         store_logs(log_list)
         return password
     if name == 'Brickell':
         append_to_loglist(LogInfo(100, '正在尝试通过Brickell协议获取密码'))
         password, log_list = get_password_from_Brickell_pyu_dic(5, id)
+        log_list.append(LogInfo(100, str(name)+'协议恢复用户'+str(id)+'密码为'+str(password)))
         store_logs(log_list)
         return password
     if name == 'shamirF':
         append_to_loglist(LogInfo(100, '正在尝试通过shamir协议获取密码'))
         password, log_list = get_password_from_shamirF_pyu_dic(5, id)
+        log_list.append(LogInfo(100, str(name)+'协议恢复用户'+str(id)+'密码为'+str(password)))
+        store_logs(log_list)
+        return password
+    if name == 'shamirS':
+        append_to_loglist(LogInfo(100, '正在尝试通过shamirS协议获取密码'))
+        password, log_list = get_password_from_shamirS_pyu_dic(5, id)
+        log_list.append(LogInfo(100, str(name)+'协议恢复用户'+str(id)+'密码为'+str(password)))
         store_logs(log_list)
         return password
 
@@ -111,6 +133,13 @@ def stage2_change_pro(now_pro, next_pro, info_dic):
         log_list = add_users_2_shamirF_pyu_dic(info_dic)
         store_logs(log_list)
 
+    if next_pro == 'shamirS':
+        append_to_loglist(LogInfo(100, '即将更改第二阶段协议为shamirS'))
+        log_list = init_shamirS()
+        store_logs(log_list)
+        log_list = add_users_2_shamirS_pyu_dic(info_dic)
+        store_logs(log_list)
+
 
 def check_init2(pro_name):
     if pro_name == 'ASS':
@@ -121,22 +150,38 @@ def check_init2(pro_name):
         return check_init()
     if pro_name == 'shamirF':
         return check_init_shamir()
+    if pro_name == 'shamirS':
+        return check_init_shamirS()
 
 
 def ASS_special(id):
-    append_to_loglist(LogInfo(100, '即将刷新用户'+id+'的秘密份额'))
+    append_to_loglist(LogInfo(100, '即将刷新用户' + id + '的秘密份额'))
     log_list = refresh_user_ss(id)
     store_logs(log_list)
 
 
 def shamir_special(id):
-    append_to_loglist(LogInfo(100, '即将针对用户'+id+'进行攻击模拟'))
+    append_to_loglist(LogInfo(100, '即将针对用户' + id + '进行攻击模拟'))
     log_list = attack_simulator(5, id)
     store_logs(log_list)
 
+
 def shamir_special_check(id, org_password):
-    append_to_loglist(LogInfo(100, '即将针对用户'+id+'进行服务器破坏检测'))
+    append_to_loglist(LogInfo(100, '即将针对用户' + id + '进行服务器破坏检测'))
     server_list, log_list = get_hijacked_server(id, org_password)
+    store_logs(log_list)
+    return server_list
+
+
+def shamirS_special(id):
+    append_to_loglist(LogInfo(100, '即将针对用户' + id + '进行攻击模拟'))
+    log_list = shamirS_attack_simulator(7, id)
+    store_logs(log_list)
+
+
+def shamirS_special_check(id, org_password):
+    append_to_loglist(LogInfo(100, '即将针对用户' + id + '进行服务器破坏检测'))
+    server_list, log_list = shamirS_get_hijacked_server(id, org_password)
     store_logs(log_list)
     return server_list
 
